@@ -1,18 +1,26 @@
-# PREREQUISITES: access to tsv file for desired phenotype which has been pre-processed by metareg_prep.py
-# IN: gene name, phenotype name, path to phenotype pre-processed tsv file
-# OUT: saves the results of a genotype-phenotype pair to a csv file with name <geno>_<pheno>.tsv
+# geno_pheno.py 
 
-# note that 'input_file' param actually determines the phenotype being analyzed for
-# and the 'phenotype' parameter simply sets the phenotype name for the output path
+# PREREQUISITES: access to tsv file for desired phenotype which has been pre-processed by metareg_prep.py
+# IN: gene name, phenotype pre-processed tsv file
+# OUT: saves the results of a genotype-phenotype pair to a csv file with name <geno>_<pheno>.tsv
 
 import pandas as pd
 import numpy as np
 import sys
 import os
 
-def main(gene, phenotype, input_file):
+def main(gene, input_file):
     # Read the TSV file
     df = pd.read_csv(input_file, sep='\t')
+
+    # map the input file to the file description
+    reference = "/scratch/groups/mrivas/larissal/genebass/pheno_results.tsv"
+    reference_df = pd.read_csv(reference, sep='\t')
+
+    phenocode = os.path.splitext(os.path.basename(input_file))[0]
+
+    # Map the input gene to the phenotype description
+    phenotype = reference_df.loc[reference_df['phenocode'] == phenocode, 'description'].values[0]
 
     # Filter the data for just the selected gene
     filtered_df = df[df['gene'] == gene]
@@ -49,12 +57,11 @@ def main(gene, phenotype, input_file):
     print(output_df.head())
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("Usage: python script.py <gene> <phenotype> <input_file>")
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <gene> <phenotype_file>")
         sys.exit(1)
     
     gene = sys.argv[1]
-    phenotype = sys.argv[2]
-    input_file = sys.argv[3]
+    input_file = sys.argv[2]
     
     main(gene, phenotype, input_file)
