@@ -16,6 +16,21 @@ base_name <- tools::file_path_sans_ext(basename(file_path))
 gene_name <- str_split(base_name, "_")[[1]][1]
 pheno_name <- str_split(base_name, "_")[[1]][2]
 
+# Load the reference data
+reference_file <- "precomputing_files_for_plots/pheno_results.txt.bgz"
+reference_df <- read.table(gzfile(reference_file), sep = "\t", header = TRUE, fill = TRUE)
+
+
+# Map the input gene to the phenotype description
+description <- reference_df$description[reference_df$phenocode == pheno_name]
+
+# Check if the description is empty
+if (length(description) == 0) {
+    pheno_description <- pheno_name
+} else {
+    pheno_description <- description[1]
+}
+
 # Load data
 data <- read_tsv(file_path, show_col_types = FALSE)
 
@@ -39,12 +54,15 @@ constant <- model_data$coef_constant[1]
 # Define UI
 ui <- fluidPage(
     titlePanel(
-        HTML(paste(
-            "<h1>Gene-Phenotype Analysis</h1>",
-            "<h3>Gene: ", gene_name, 
-            " | Phenotype Code: ", pheno_name, "</h3>",
-            "<br>", "<br>"
-        ))
+        HTML(
+            paste(
+                "<h1>Gene-Phenotype Analysis</h1>",
+                "<h3>Gene: ", gene_name, 
+                " | Phenotype: ", '"', pheno_description, '"', 
+                "</h3>",
+                "<br><br>"
+            )
+        )
     ),
     
     mainPanel(
@@ -87,7 +105,7 @@ server <- function(input, output) {
             showlegend = FALSE
         ) %>%
         layout(title = list(
-            text = paste("CASZ1: Constraint Analysis<br><span style='font-size: 14px;'>(p-value:", p_constraint, "| Coefficient:", coef_constraint, ")</span>")), 
+            text = paste(gene_name,"Constraint Analysis<br><span style='font-size: 14px;'>(p-value:", p_constraint, "| Coefficient:", coef_constraint, ")</span>")), 
             xaxis = list(title = "log(1 - Constraint Probability)"), 
             yaxis = list(title = "Effect Size")
         )
@@ -115,7 +133,7 @@ server <- function(input, output) {
             showlegend = FALSE
         ) %>%
         layout(title = list(
-            text = paste("CASZ1: Pathogenicity Analysis<br><span style='font-size: 14px;'>(p-value:", p_pathogenicity, "| Coefficient:", coef_pathogenicity, ")</span>")), 
+            text = paste(gene_name, "Pathogenicity Analysis<br><span style='font-size: 14px;'>(p-value:", p_pathogenicity, "| Coefficient:", coef_pathogenicity, ")</span>")), 
             xaxis = list(title = "log(1 - Pathogenicity Probability)"), 
             yaxis = list(title = "Effect Size")
         )
@@ -124,7 +142,7 @@ server <- function(input, output) {
     # LoF Analysis Plot
     output$lofPlot <- renderPlotly({
         plot_ly(data, x = ~factor(pLoF_indicator), y = ~BETA, type = 'box') %>%
-        layout(title = paste("CASZ1: Loss-of-Function Analysis<br><span style='font-size: 14px;'>(p-value:", p_pLoF, "| Coefficient:", coef_pLoF_indicator, ")</span>"), 
+        layout(title = paste(gene_name, "Loss-of-Function Analysis<br><span style='font-size: 14px;'>(p-value:", p_pLoF, "| Coefficient:", coef_pLoF_indicator, ")</span>"), 
                xaxis = list(title = "LoF Indicator"), 
                yaxis = list(title = "Effect Size")
         )
@@ -133,7 +151,7 @@ server <- function(input, output) {
     # Missense Indicator Plot
     output$missensePlot <- renderPlotly({
         plot_ly(data, x = ~factor(missense_indicator), y = ~BETA, type = 'box') %>%
-        layout(title = paste("CASZ1: Missense Analysis<br><span style='font-size: 14px;'>(p-value:", p_missense, "| Coefficient:", coef_missense_indicator, ")</span>"), 
+        layout(title = paste(gene_name, "Missense Analysis<br><span style='font-size: 14px;'>(p-value:", p_missense, "| Coefficient:", coef_missense_indicator, ")</span>"), 
                xaxis = list(title = "Missense Indicator"), 
                yaxis = list(title = "Effect Size")
         )
