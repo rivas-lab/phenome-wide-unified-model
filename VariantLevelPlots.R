@@ -63,27 +63,21 @@ server <- function(input, output, session) {
     data %>%
       filter(gene == input$geneSelect, description == input$phenotypeSelect)  # Ensure correct column name
   })
-  
-  # Display the selected gene and phenotype in the UI
-  output$geneLabel <- renderText({
-    paste("Gene:", input$geneSelect)
-  })
-  
-  output$phenotypeLabel <- renderText({
-    paste("Phenotype:", input$phenotypeSelect)
-  })
-  
-  # Plot for coefficient data
-  output$coefPlot <- renderPlotly({
-    plot_ly(filtered_data(), x = ~markerID, y = ~BETA, type = 'scatter', mode = 'markers')
-  })
 
   # Constraint Plot
+  plotdata <- data %>%
+        mutate(log_constraint = ifelse(log_constraint > 1.5, 1.5, log_constraint)) 
+
   output$constraintPlot <- renderPlotly({
-    plot_ly(filtered_data(), x = ~log_constraint, y = ~BETA, type = 'scatter', mode = 'markers', 
+    plot_ly(plotdata, x = ~log_constraint, y = ~BETA, type = 'scatter', mode = 'markers', 
             text = ~paste("Variant ID:", markerID, "<br>Effect size:", BETA),
             hoverinfo = "text"
-    )
+    ) %>%
+        layout(
+            title = paste("Constraint Analysis"),
+            xaxis = list(title = "-log(1 - Constraint Probability)"), 
+            yaxis = list(title = "Effect Size on Phenotype")
+        )
   })
 
    # Pathogenicity Plot
@@ -91,6 +85,11 @@ server <- function(input, output, session) {
         plot_ly(filtered_data(), x = ~log_pathogenicity, y = ~BETA, type = 'scatter', mode = 'markers',
                 text = ~paste("Variant ID:", markerID, "<br> Effect size:", BETA),
                 hoverinfo = "text"
+        ) %>%
+        layout(
+            title = paste("Pathogenicity Analysis"),
+            xaxis = list(title = "-log(1 - Pathogenicity Probability)"), 
+            yaxis = list(title = "Effect Size on Phenotype")
         )
     })
 }
