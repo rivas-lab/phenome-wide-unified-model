@@ -65,11 +65,8 @@ server <- function(input, output, session) {
   })
 
   # Constraint Plot
-  plotdata <- data %>%
-        mutate(log_constraint = ifelse(log_constraint > 1.5, 1.5, log_constraint)) 
-
   output$constraintPlot <- renderPlotly({
-    plot_ly(plotdata, x = ~log_constraint, y = ~BETA, type = 'scatter', mode = 'markers', 
+    plot_ly(filtered_data(), x = ~log_constraint, y = ~BETA, type = 'scatter', mode = 'markers', 
             text = ~paste("Variant ID:", markerID, "<br>Effect size:", BETA),
             hoverinfo = "text"
     ) %>%
