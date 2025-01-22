@@ -19,7 +19,8 @@ gene_level_results <- "filtered_results.csv" # path to the gene level results
 ui <- fluidPage(
   titlePanel(
     tags$div(
-      tags$h1("Unified Meta Regression Model Results 400k Exomes")
+      tags$h1("Unified Meta Regression Model Results 400k Exomes"),
+      tags$h5("Larissa Lauer, Manuel Rivas")
     )
   ),
   sidebarLayout(
