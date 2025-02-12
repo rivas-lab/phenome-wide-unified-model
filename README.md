@@ -1,11 +1,11 @@
 # Phenome-wide unified model
 
 ## Table of Contents
-1. Download genebass files
-2. Process phenotype descriptions
-3. Prepare Files for Meta-Regression (```metareg_prep.py```)
-4. Identify Continuous Phenotypes
-5. Job Scripting for ```metareg_prep.py```
+1. [Download genebass files](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
+2. [Process phenotype descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
+3. [Prepare Files for Meta-Regression](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-prepare-files-for-meta-regression) (```metareg_prep.py```)
+4. [Identify Continuous Phenotypes]()
+5. [Job Scripting for ```metareg_prep.py```]()
 6. Unified Meta-Regression Model
 
 
