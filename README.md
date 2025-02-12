@@ -5,8 +5,7 @@
 2. [Process phenotype descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-process-phenotype-descriptions)
 3. [Prepare Files for Meta-Regression](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#3-prepare-files-for-meta-regression-metareg_preppy)(```metareg_prep.py```)
 4. [Identify Continuous Phenotypes](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#4-identify-continuous-phenotypes)
-5. [Job Scripting for ```metareg_prep.py```](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#5-job-scripting-for-metareg_preppy)
-6. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model) (```unified_reg_MAF.05.py```)
+5. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model) (```unified_reg_MAF.05.py```)
 
 
 # 1. Download genebass files
@@ -38,6 +37,7 @@ single_variant_results_table.export(scratch_path + 'single_variant_results.tsv')
 phenotype_metadata_df = phenotype_metadata.to_pandas()
 phenotype_metadata_df.to_csv(scratch_path + 'pheno_results.tsv', sep='\t', index=False)
 ```
+
 
 # 2. Process phenotype descriptions
 
@@ -82,6 +82,7 @@ if __name__ == "__main__":
     end_index = int(sys.argv[2])
     process_phenotypes(start_index, end_index)
 ```
+
 
 # 3. Prepare Files for Meta-Regression (```metareg_prep.py```)
 OUTPUT: a TSV file ready to be analyzed by unified_reg.py
@@ -202,6 +203,7 @@ if __name__ == "__main__":
     main(args.dataset_path, args.output_path)
 ```
 
+
 # 4. Identify Continuous Phenotypes
 Helpful when we want to analyze only continuous phenotypes.
 
@@ -232,55 +234,8 @@ if __name__ == "__main__":
     continuous_phenos = get_continuous_phenos(my_path)
 ```
 
-# 5. Job Scripting for ```metareg_prep.py```
-Push the file pre-processing step across all continuous phenotypes.
 
-## Prerequisities:
-1. Working version of ```metareg_prep.py```
-2. A file ```continous_phenos.txt``` containing a list of every continuous phenotype (use ```get_continuous_phenos.py```)
-3. A job script (here it is named ```metareg_prep.sh```) for submitting each phenotype to be processed.
-
-```bash
-#!/bin/bash
-
-# Load the necessary module
-module load python/3.9
-
-# Directory containing the input files
-DIRECTORY="/scratch/groups/mrivas/genebassout"
-
-# Directory to save the output files
-OUTPUT_DIR="/scratch/groups/mrivas/larissaredo/prepped_files"
-
-# Path to the file containing continuous phenotypes
-CONTINUOUS_PHENOS_FILE="/scratch/groups/mrivas/larissaredo/continuous_phenos.txt"
-
-# Ensure the continuous phenotype file exists
-if [ ! -f "$CONTINUOUS_PHENOS_FILE" ]; then
-  echo "Error: Continuous phenotypes file not found at $CONTINUOUS_PHENOS_FILE."
-  exit 1
-fi
-
-# Loop over each file in the directory with .tsv extension
-for file in "$DIRECTORY"/*.tsv.gz; do
-  # Extract the phenotype code from the file name
-  pheno=$(basename "$file" .tsv)
-  # removing the suffix .genebass because i want files to match phenocode name
-  pheno=$(echo "$pheno" | cut -d'.' -f1)
-  
-  # Check if the phenotype code is in the file of continuous phenotypes
-  if grep -Fxq "$pheno" "$CONTINUOUS_PHENOS_FILE"; then
-    output_file="$OUTPUT_DIR/$(basename "$file")"
-    sbatch metareg_prep.sh "$file" "$output_file"
-    echo "Phenotype $pheno is continuous. Submitting job..."
-  else
-    echo "Skipping: $(basename "$file"). Reason: Not a continuous phenotype"
-  fi 
-done
-```
-
-
-# 6. Unified Meta Regression Model (```unified_reg_MAF.05.py```)
+# 5. Unified Meta Regression Model (```unified_reg_MAF.05.py```)
 
 This will save the results of the unified meta regression analysis of each phenotype to a compressed TSV file.
 ## Prerequisites:
@@ -398,4 +353,52 @@ if __name__ == "__main__":
 
 ```
 
+
 # 7. Pipeline for Unified Meta Regression
+
+# (Part 1) Job Scripting for ```metareg_prep.py```
+Push the file pre-processing step across all continuous phenotypes.
+
+## Prerequisities:
+1. Working version of ```metareg_prep.py```
+2. A file ```continous_phenos.txt``` containing a list of every continuous phenotype (use ```get_continuous_phenos.py```)
+3. A job script (here it is named ```metareg_prep.sh```) for submitting each phenotype to be processed.
+
+```bash
+#!/bin/bash
+
+# Load the necessary module
+module load python/3.9
+
+# Directory containing the input files
+DIRECTORY="/scratch/groups/mrivas/genebassout"
+
+# Directory to save the output files
+OUTPUT_DIR="/scratch/groups/mrivas/larissaredo/prepped_files"
+
+# Path to the file containing continuous phenotypes
+CONTINUOUS_PHENOS_FILE="/scratch/groups/mrivas/larissaredo/continuous_phenos.txt"
+
+# Ensure the continuous phenotype file exists
+if [ ! -f "$CONTINUOUS_PHENOS_FILE" ]; then
+  echo "Error: Continuous phenotypes file not found at $CONTINUOUS_PHENOS_FILE."
+  exit 1
+fi
+
+# Loop over each file in the directory with .tsv extension
+for file in "$DIRECTORY"/*.tsv.gz; do
+  # Extract the phenotype code from the file name
+  pheno=$(basename "$file" .tsv)
+  # removing the suffix .genebass because i want files to match phenocode name
+  pheno=$(echo "$pheno" | cut -d'.' -f1)
+  
+  # Check if the phenotype code is in the file of continuous phenotypes
+  if grep -Fxq "$pheno" "$CONTINUOUS_PHENOS_FILE"; then
+    output_file="$OUTPUT_DIR/$(basename "$file")"
+    sbatch metareg_prep.sh "$file" "$output_file"
+    echo "Phenotype $pheno is continuous. Submitting job..."
+  else
+    echo "Skipping: $(basename "$file"). Reason: Not a continuous phenotype"
+  fi 
+done
+```
