@@ -2,7 +2,7 @@
 
 ## Table of Contents
 1. [Download genebass files](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
-2. [Process phenotype descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-process-phenotype-descriptions)
+2. [Pre-process phenotype descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-process-phenotype-descriptions)
 3. [Prepare Files for Meta-Regression](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#3-prepare-files-for-meta-regression-metareg_preppy)(```metareg_prep.py```)
 4. [Identify Continuous Phenotypes](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#4-identify-continuous-phenotypes)
 5. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model) (```unified_reg_MAF.05.py```)
@@ -39,7 +39,7 @@ phenotype_metadata_df.to_csv(scratch_path + 'pheno_results.tsv', sep='\t', index
 ```
 
 
-# 2. Process phenotype descriptions
+# 2. Pre-process phenotype descriptions
 
 ## Prerequisites:
 - Install hail.
@@ -356,13 +356,15 @@ if __name__ == "__main__":
 
 # 7. Pipeline for Unified Meta Regression
 
-# (Part 1) Job Scripting for ```metareg_prep.py```
+## Job Scripting for ```metareg_prep.py```
 Push the file pre-processing step across all continuous phenotypes.
 
 ## Prerequisities:
-1. Working version of ```metareg_prep.py```
-2. A file ```continous_phenos.txt``` containing a list of every continuous phenotype (use ```get_continuous_phenos.py```)
-3. A job script (here it is named ```metareg_prep.sh```) for submitting each phenotype to be processed.
+1. Downloaded genebass files
+2. Pre-processing phenotype descriptions
+3. Working version of ```metareg_prep.py``` script
+4. A file ```continous_phenos.txt``` containing a list of every continuous phenotype (use ```get_continuous_phenos.py``` to generate this text file)
+5. A job script (here it is named ```metareg_prep.sh```) which submits each phenotype to be processed.
 
 ```bash
 #!/bin/bash
