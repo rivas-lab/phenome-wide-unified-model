@@ -280,4 +280,4 @@ done
 ```
 
 
-# II. Unified Meta Regression Model
+# 6. Unified Meta Regression Model
