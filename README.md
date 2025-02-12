@@ -81,7 +81,7 @@ Access to the following datasets
 1. Constraint probabilities - data located at ``` /oak/stanford/groups/mrivas/projects/wgs-constraint-llm/osthoag/wgs-constraint-llm/results/HMM_rgc_0.9_over20_chr2_predictions_rgc_wes.tsv.gz ```
 2. Alpha Missense scores located in:
 ``` /oak/stanford/groups/mrivas/projects/wgs-constraint-llm/data/AlphaMissense_hg38.tsv.gz ```
-3. Downloaded genebass files for phenotypes
+3. [Downloaded genebass files](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#download-genebass-files) for phenotypes
 
 ```python3
 # metareg_prep.py
@@ -197,7 +197,7 @@ if __name__ == "__main__":
 Helpful when we want to analyze only continuous phenotypes.
 
 ## Prerequisities:
-1. Downloaded genebass file from [step 1](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#download-genebass-files)
+1. [Downloaded genebass file](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#download-genebass-files)
 
 ```python3
 # creates a text file containing every continuous phenotype code
