@@ -6,9 +6,11 @@
 
 import pandas as pd
 import numpy as np
+import os
 from tqdm import tqdm
 from statsmodels.regression.linear_model import WLS
 from statsmodels.tools.tools import add_constant
+import logging
 
 
 def main(results_path, output_path):
@@ -54,9 +56,15 @@ def main(results_path, output_path):
         try:
             model = WLS(y, X, weights=weights, missing='drop').fit()
             
+            # Set up logging basic config
+            pheno_code = os.path.basename(results_path).replace(".genebass.tsv.gz", "")
+            log_dir = "/scratch/groups/mrivas/larissaredo/unified_model"
+            log_file = os.path.join(log_dir, f"{pheno_code}.log")
+            logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
             # Perform diagnostics
-            print("Gene", {gene[0]})
-            print(model.summary())
+            logging.info(f"Gene {gene[0]}")
+            logging.info(model.summary().as_text())
 
             # Append results to the list: coefficients and p-values
             meta_model_results.append({
@@ -80,7 +88,7 @@ def main(results_path, output_path):
                 'p_constant': model.pvalues['const']
             })
         except Exception as e:
-            print(f"An error occurred with gene {gene}: {e}")
+            logging.error(f"An error occurred with gene {gene}: {e}")
 
     # Create a DataFrame from the results
     unified_model_df = pd.DataFrame(meta_model_results)
@@ -88,8 +96,6 @@ def main(results_path, output_path):
     # Save the results to a compressed CSV file
     unified_model_df.to_csv(output_path, index=False, compression='gzip', sep='\t')
 
-    # Display the DataFrame (for local debugging)
-    print(unified_model_df)
 
 if __name__ == "__main__":
     import sys
