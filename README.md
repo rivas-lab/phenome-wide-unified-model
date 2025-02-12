@@ -1,6 +1,15 @@
 # Phenome-wide unified model
 
-# Download genebass files
+## Table of Contents
+1. Download genebass files
+2. Process phenotype descriptions
+3. Prepare Files for Meta-Regression (```metareg_prep.py```)
+4. Identify Continuous Phenotypes
+5. Job Scripting for ```metareg_prep.py```
+6. Unified Meta-Regression Model
+
+
+# 1. Download genebass files
 
 ## Prerequisites: 
 - Install hail and pandas for python3
@@ -30,7 +39,7 @@ phenotype_metadata_df = phenotype_metadata.to_pandas()
 phenotype_metadata_df.to_csv(scratch_path + 'pheno_results.tsv', sep='\t', index=False)
 ```
 
-# Process phenotype descriptions
+# 2. Process phenotype descriptions
 
 ## Prerequisites:
 - Install hail.
@@ -74,7 +83,7 @@ if __name__ == "__main__":
     process_phenotypes(start_index, end_index)
 ```
 
-# Prepare Files for Regression
+# 3. Prepare Files for Meta-Regression (```metareg_prep.py```)
 OUTPUT: a TSV file ready to be analyzed by unified_reg.py
 ## Prerequisites:
 Access to the following datasets
@@ -193,7 +202,7 @@ if __name__ == "__main__":
     main(args.dataset_path, args.output_path)
 ```
 
-# Identify Continuous Phenotypes
+# 4. Identify Continuous Phenotypes
 Helpful when we want to analyze only continuous phenotypes.
 
 ## Prerequisities:
@@ -223,7 +232,8 @@ if __name__ == "__main__":
     continuous_phenos = get_continuous_phenos(my_path)
 ```
 
-# File Prep Pipeline
+# 5. Job Scripting for ```metareg_prep.py```
+Push the file pre-processing step across all continuous phenotypes.
 
 ## Prerequisities:
 1. Working version of ```metareg_prep.py```
@@ -268,3 +278,6 @@ for file in "$DIRECTORY"/*.tsv.gz; do
   fi 
 done
 ```
+
+
+# II. Unified Meta Regression Model
