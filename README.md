@@ -81,7 +81,7 @@ Access to the following datasets
 1. Constraint probabilities - data located at ``` /oak/stanford/groups/mrivas/projects/wgs-constraint-llm/osthoag/wgs-constraint-llm/results/HMM_rgc_0.9_over20_chr2_predictions_rgc_wes.tsv.gz ```
 2. Alpha Missense scores located in:
 ``` /oak/stanford/groups/mrivas/projects/wgs-constraint-llm/data/AlphaMissense_hg38.tsv.gz ```
-3. [Downloaded genebass files](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#download-genebass-files) for phenotypes
+3. Downloaded genebass files for phenotypes
 
 ```python3
 # metareg_prep.py
@@ -197,11 +197,11 @@ if __name__ == "__main__":
 Helpful when we want to analyze only continuous phenotypes.
 
 ## Prerequisities:
-1. [Downloaded genebass file](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#download-genebass-files)
+1. Downloaded genebass file ```pheno_results.tsv```
 
 ```python3
+# get_continuous_phenos.py
 # creates a text file containing every continuous phenotype code
-
 
 import pandas as pd
 
@@ -226,9 +226,9 @@ if __name__ == "__main__":
 # File Prep Pipeline
 
 ## Prerequisities:
-1. Working version of [metareg_prep.py](https://github.com/rivas-lab/phenome-wide-unified-model/edit/main/README.md#prepare-files-for-regression)
-2. A file continous_phenos.txt generated containing a list of every continuous phenotype
-3. A job script (here it is named ```metareg_prep.sh```).
+1. Working version of ```metareg_prep.py```
+2. A file ```continous_phenos.txt``` containing a list of every continuous phenotype (use ```get_continuous_phenos.py```)
+3. A job script (here it is named ```metareg_prep.sh```) for submitting each phenotype to be processed.
 
 ```bash
 #!/bin/bash
