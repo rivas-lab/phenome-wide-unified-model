@@ -6,7 +6,7 @@
 3. [Prepare Files for Meta-Regression](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#3-prepare-files-for-meta-regression-metareg_preppy)(```metareg_prep.py```)
 4. [Identify Continuous Phenotypes](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#4-identify-continuous-phenotypes)
 5. [Job Scripting for ```metareg_prep.py```](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#5-job-scripting-for-metareg_preppy)
-6. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model)
+6. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model) (```unified_reg_MAF.05.py```)
 
 
 # 1. Download genebass files
