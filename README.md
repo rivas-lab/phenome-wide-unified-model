@@ -1,14 +1,14 @@
 # Phenome-wide unified model
 
 ## Table of Contents
-1. [Download genebass files](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
-2. [Pre-process phenotype descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-process-phenotype-descriptions)
+1. [Download Genebass Files](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
+2. [Pre-process Phenotype Descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#2-process-phenotype-descriptions)
 3. [Prepare Files for Meta-Regression](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#3-prepare-files-for-meta-regression-metareg_preppy)(```metareg_prep.py```)
-4. [Identify Continuous Phenotypes](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#4-identify-continuous-phenotypes)
+4. [Identify Continuous Phenotypes](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#4-identify-continuous-phenotypes)(```get_continuous_phenos.py```)
 5. [Unified Meta-Regression Model](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#6-unified-meta-regression-model) (```unified_reg_MAF.05.py```)
 
 
-# 1. Download genebass files
+# 1. Download Genebass Files
 
 ## Prerequisites: 
 - Install hail and pandas for python3
@@ -39,7 +39,7 @@ phenotype_metadata_df.to_csv(scratch_path + 'pheno_results.tsv', sep='\t', index
 ```
 
 
-# 2. Pre-process phenotype descriptions
+# 2. Pre-process Phenotype Descriptions
 
 ## Prerequisites:
 - Install hail.
