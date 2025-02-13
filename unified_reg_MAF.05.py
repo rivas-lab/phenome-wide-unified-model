@@ -57,7 +57,7 @@ def main(results_path, output_path):
             model = WLS(y, X, weights=weights, missing='drop').fit()
             
             # Set up logging basic config
-            pheno_code = os.path.basename(results_path).replace(".genebass.tsv.gz", "")
+            pheno_code = os.path.basename(results_path).replace(".processed.tsv.gz", "")
             log_dir = "/scratch/groups/mrivas/larissaredo/unified_model"
             log_file = os.path.join(log_dir, f"{pheno_code}.log")
             logging.basicConfig(filename=log_file, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
