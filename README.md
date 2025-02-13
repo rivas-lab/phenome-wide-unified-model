@@ -368,40 +368,10 @@ Push the file pre-processing step across all continuous phenotypes.
 5. A job script (here it is named ```metareg_prep.sh```) which submits each phenotype to be processed.
 
 ```bash
-#!/bin/bash
 
-# Load the necessary module
-module load python/3.9
+```
 
-# Directory containing the input files
-DIRECTORY="/scratch/groups/mrivas/genebassout"
+## Job Scripting for ```unified_reg_MAF.05.py```
 
-# Directory to save the output files
-OUTPUT_DIR="/scratch/groups/mrivas/larissaredo/prepped_files"
-
-# Path to the file containing continuous phenotypes
-CONTINUOUS_PHENOS_FILE="/scratch/groups/mrivas/larissaredo/continuous_phenos.txt"
-
-# Ensure the continuous phenotype file exists
-if [ ! -f "$CONTINUOUS_PHENOS_FILE" ]; then
-  echo "Error: Continuous phenotypes file not found at $CONTINUOUS_PHENOS_FILE."
-  exit 1
-fi
-
-# Loop over each file in the directory with .tsv extension
-for file in "$DIRECTORY"/*.tsv.gz; do
-  # Extract the phenotype code from the file name
-  pheno=$(basename "$file" .tsv)
-  # removing the suffix .genebass because i want files to match phenocode name
-  pheno=$(echo "$pheno" | cut -d'.' -f1)
-  
-  # Check if the phenotype code is in the file of continuous phenotypes
-  if grep -Fxq "$pheno" "$CONTINUOUS_PHENOS_FILE"; then
-    output_file="$OUTPUT_DIR/$(basename "$file")"
-    sbatch metareg_prep.sh "$file" "$output_file"
-    echo "Phenotype $pheno is continuous. Submitting job..."
-  else
-    echo "Skipping: $(basename "$file"). Reason: Not a continuous phenotype"
-  fi 
-done
+```
 ```
