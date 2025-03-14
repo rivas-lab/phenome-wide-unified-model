@@ -206,7 +206,7 @@ if __name__ == "__main__":
 
 
 # 4. Identify Continuous Phenotypes
-Helpful when we want to analyze only continuous phenotypes.
+This step is helpful when we want to analyze only continuous phenotypes and want to avoid processing non-continuous input files. Not necessary if only running one phenotype at a type.
 
 ## Prerequisities:
 1. Downloaded genebass file ```pheno_results.tsv```
