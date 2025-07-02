@@ -12,7 +12,7 @@
 # 1. Download Genebass Files
 
 ## Prerequisites: 
-- Install hail and pandas for python3
+- Install Hail==0.2.13 (see instructions for setting up Hail on Sherlock cluster [here](https://github.com/rivas-lab/phenome-wide-unified-model/commit/ecf51191662b7f2b1c6f4919ec2a7e81898c45dc#diff-c74fe2d4730ae9a139c374a263e020ae9ba20dd977f34e5f83027d66dfa85592).)
 - Allow hail to read from Google Cloud Storage. Hail provides documentation for doing this [here](https://hail.is/docs/0.2/cloud/google_cloud.html).
 
 ```python3
