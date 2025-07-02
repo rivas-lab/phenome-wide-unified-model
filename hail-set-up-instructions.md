@@ -55,7 +55,7 @@ pip install pyspark==3.5.0
 ml python/3.12.1
 ml java/11.0.11
 ml gcc/10.1.0
-source ~ls
+source ~/hail_env_py312/bin/activate
 
 python -c "
 import sys
