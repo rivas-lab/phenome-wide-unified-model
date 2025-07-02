@@ -40,7 +40,7 @@ pip install pyspark==3.5.0
 
 ---
 
-### 5. Test Hail
+### 5. Optional: Test Hail
 
 ```bash
 #!/bin/bash
