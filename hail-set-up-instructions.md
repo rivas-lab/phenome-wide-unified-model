@@ -1,6 +1,6 @@
 **Setting Up a Hail Environment on Sherlock with Python 3.12**
 
-This document outlines the exact lines used to successfully set up and run Hail on the Sherlock computing cluster using Python 3.12.
+This document outlines the exact lines used to successfully set up and run Hail on the Sherlock computing cluster using Python 3.12. This is more so a note for my future self (hi future larissa) than it is a guide for other people, but here it is if anyone ever looks at this.
 
 ---
 
