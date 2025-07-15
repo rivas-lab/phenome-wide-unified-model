@@ -12,7 +12,7 @@ library(htmlwidgets)
 
 
 # File path for the local data
-file_path <- "variant_level_results.tsv.gz"  # path to the variant level results
+file_path <- "variant_level_results_filtered.tsv.gz"  # path to the variant level results
 gene_level_results <- "filtered_results.csv" # path to the gene level results
 
 # UI
