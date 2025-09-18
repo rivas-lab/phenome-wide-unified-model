@@ -1,5 +1,8 @@
 # Phenome-wide unified model
 
+This phenome-wide unified model is a meta-regression approach to rare variant association studies (RVAS). We use pathogeniticy predictions from Alpha Missense, constraint metrics, and potential LoF and missense annotations to model the observed effect size and uncertainty of effect size obtained from single-variant genetic analysis. We applied the unified meta regression model to 1,144 continuous phenotypes from UK Biobank using single variant summary statistics obtained from Genebass. Read more about this project here: https://www.biorxiv.org/content/10.1101/2025.01.23.634522v1
+
+
 ## Table of Contents
 1. [Download Genebass Files](https://github.com/rivas-lab/phenome-wide-unified-model/blob/main/README.md#1-download-genebass-files)
 2. [Pre-process Phenotype Descriptions](https://github.com/rivas-lab/phenome-wide-unified-model/tree/main?tab=readme-ov-file#2-pre-process-phenotype-descriptions)
